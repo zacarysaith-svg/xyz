@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>UC Purchasing - Public View (password removed)</title>
+  <meta name="referrer" content="no-referrer">
+</head>
+<body>
+  <script>
+    (async function(){
+      try{
+        // Source HTML (the exact commit you referenced)
+        const srcUrl = 'https://raw.githubusercontent.com/Mrkhan44003/mrkhan44003/44e919819aa8ccc5539db61f208b644950aa0a90/UC/uc.html';
+        const res = await fetch(srcUrl);
+        if(!res.ok) throw new Error('Could not fetch source: '+res.status);
+        let html = await res.text();
+
+        // Remove the password prompt block
+        html = html.replace(/<div id="password-section"[\s\S]*?<\/div>/i, '');
+
+        // Make the main content visible
+        html = html.replace(/<div id="mainContent" style="display:none;">/i, '<div id="mainContent" style="display:block;">');
+
+        // Write the modified HTML to the page so styles & scripts execute normally
+        document.open();
+        document.write(html);
+        document.close();
+      }catch(err){
+        document.body.innerHTML = '<p style="color:red;">Error loading public view: '+err.message+'</p>';
+        console.error(err);
+      }
+    })();
+  </script>
+</body>
+</html>
